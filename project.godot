@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 [global_group]
 
 gates="group for all logic gates"
+inputs="a group for all the inputs"
+outputs="a group for all the outputs"
 
 [input]
 

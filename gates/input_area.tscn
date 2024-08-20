@@ -5,7 +5,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_n1x1m"]
 radius = 24.0208
 
-[node name="InputArea" type="Area2D"]
+[node name="InputArea" type="Area2D" groups=["inputs"]]
 position = Vector2(-58, 2)
 script = ExtResource("1_4cx6m")
 

@@ -1,10 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://b10g0m66gwypw"]
+[gd_scene load_steps=3 format=3 uid="uid://b10g0m66gwypw"]
+
+[ext_resource type="Script" path="res://gates/output_area.gd" id="1_sngqs"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n1x1m"]
 radius = 24.0208
 
-[node name="OutputArea" type="Area2D"]
+[node name="OutputArea" type="Area2D" groups=["outputs"]]
 position = Vector2(42, 2)
+script = ExtResource("1_sngqs")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_n1x1m")
