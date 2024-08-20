@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://ho70ru5nue5a"]
+
+[ext_resource type="PackedScene" uid="uid://bqfvhr5nlejr2" path="res://gates/gate_scenes/not_gate.tscn" id="1_5xght"]
+[ext_resource type="Script" path="res://globals/grab_variables.gd" id="1_55ls6"]
+[ext_resource type="PackedScene" uid="uid://c5qlhvya4xd5v" path="res://gates/gate_scenes/and_gate.tscn" id="2_0xdea"]
+
+[node name="Main" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_55ls6")
+
+[node name="AndGate2" parent="." instance=ExtResource("2_0xdea")]
+position = Vector2(648, 107)
+
+[node name="NotGate" parent="." instance=ExtResource("1_5xght")]
+position = Vector2(504, 264)
+
+[node name="NotGate2" parent="." instance=ExtResource("1_5xght")]
+position = Vector2(403, 446)
+
+[node name="AndGate" parent="." instance=ExtResource("2_0xdea")]
+position = Vector2(269, 142)

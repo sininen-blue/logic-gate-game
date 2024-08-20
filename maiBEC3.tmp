@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ho70ru5nue5a"]
+
+[ext_resource type="PackedScene" uid="uid://bqfvhr5nlejr2" path="res://gates/not_gate.tscn" id="1_5xght"]
+
+[node name="Main" type="Node2D"]
+
+[node name="NotGate" parent="." instance=ExtResource("1_5xght")]
+position = Vector2(504, 264)
