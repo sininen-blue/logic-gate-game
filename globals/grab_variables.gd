@@ -13,10 +13,15 @@ var current_gate : Area2D
 
 enum {
 	IDLE,
-	CREATING_GATE,
+	MOVING_GATE,
 	CREATING_CONNECTION,
 }
 var state = IDLE
+
+
+# TODO:
+#current issue is that you can have multiple connections with the same start and stop
+#also need to recheck the cleanup of values since sometimes things tend to jump around
 
 func _process(_delta: float) -> void:
 	handle_connections()
@@ -24,7 +29,7 @@ func _process(_delta: float) -> void:
 		IDLE:
 			if Input.is_action_just_pressed("left_click"):
 				if current_gate != null:
-					state = CREATING_GATE
+					state = MOVING_GATE
 				
 				if current_connection != null:
 					current_connection.add_point(get_global_mouse_position())
@@ -32,7 +37,7 @@ func _process(_delta: float) -> void:
 					
 					state = CREATING_CONNECTION
 
-		CREATING_GATE:
+		MOVING_GATE:
 			current_gate.global_position = get_global_mouse_position()
 			
 			if Input.is_action_just_released("left_click"):
@@ -67,9 +72,9 @@ func _on_gate_hover(source : Area2D):
 func _on_gate_unhover(source : Area2D):
 	# BUG: Big problem here
 	# if you unhover it breaks
-	pass
-	#if current_gate == source:
-		#current_gate = null
+	
+	if current_gate != null and state != MOVING_GATE:
+		current_gate = null
 
 
 var connections : Array
@@ -98,9 +103,13 @@ func _on_input_hover(source : Area2D):
 	else:
 		# check if the hover is from a separate input point
 		# need to add extra check to only get output points
+		
+		# NOTE: THIS DOESN'T WORK YET
+		# IT ONLY CONNECTS TO OTHER INPUT AREAS
 		if current_connection.get_point_position(0) != source.global_position:
 			potential_close = source
 
 
 func _on_input_unhover(source : Area2D):
-	pass
+	if current_connection != null and state != CREATING_CONNECTION:
+		current_connection = null
