@@ -1,31 +1,24 @@
 extends Node2D
 
+signal gate_hover(source)
+signal gate_unhover(source)
+
 var hovering : bool = false
-var being_carried : bool = false
 
 @onready var parent : Node = get_parent()
+@onready var main : Node2D = get_parent().get_parent()
 
 func _ready() -> void:
 	parent.mouse_entered.connect(_on_mouse_entered)
 	parent.mouse_exited.connect(_on_mouse_exited)
-
-func _process(_delta: float) -> void:
-	if hovering and GrabVariables.carrying == false:  
-		if Input.is_action_pressed("left_click"):
-			GrabVariables.carrying = true
-			being_carried = true
-					
-	if Input.is_action_just_released("left_click"):
-		GrabVariables.carrying = false
-		being_carried = false
 	
-	if being_carried:
-		parent.global_position = get_global_mouse_position()
-
+	self.gate_hover.connect(main._on_gate_hover)
+	self.gate_unhover.connect(main._on_gate_unhover)
 
 func _on_mouse_entered() -> void:
 	hovering = true
-		
+	gate_hover.emit(parent)
 
 func _on_mouse_exited() -> void:
 	hovering = false
+	gate_unhover.emit(parent)

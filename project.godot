@@ -15,9 +15,9 @@ run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
-[autoload]
+[global_group]
 
-GrabVariables="*res://globals/grab_variables.gd"
+gates="group for all logic gates"
 
 [input]
 
