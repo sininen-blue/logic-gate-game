@@ -21,7 +21,7 @@ var state = IDLE
 
 # TODO:
 #current issue is that you can have multiple connections with the same start and stop
-#also need to recheck the cleanup of values since sometimes things tend to jump around
+#(done) also need to recheck the cleanup of values since sometimes things tend to jump around
 
 func _process(_delta: float) -> void:
 	handle_connections()
@@ -70,9 +70,6 @@ func _on_gate_hover(source : Area2D):
 		current_gate = source
 
 func _on_gate_unhover(source : Area2D):
-	# BUG: Big problem here
-	# if you unhover it breaks
-	
 	if current_gate != null and state != MOVING_GATE:
 		current_gate = null
 
