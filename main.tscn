@@ -1,21 +1,147 @@
-[gd_scene load_steps=4 format=3 uid="uid://ho70ru5nue5a"]
+[gd_scene load_steps=9 format=3 uid="uid://ho70ru5nue5a"]
 
 [ext_resource type="PackedScene" uid="uid://bqfvhr5nlejr2" path="res://gates/gate_scenes/not_gate.tscn" id="1_5xght"]
 [ext_resource type="Script" path="res://globals/grab_variables.gd" id="1_55ls6"]
 [ext_resource type="PackedScene" uid="uid://c5qlhvya4xd5v" path="res://gates/gate_scenes/and_gate.tscn" id="2_0xdea"]
+[ext_resource type="PackedScene" uid="uid://drvv5hmhf18c4" path="res://gates/gate_scenes/nand_gate.tscn" id="3_tb7ej"]
+[ext_resource type="PackedScene" uid="uid://trfyab33tjl1" path="res://gates/gate_scenes/or_gate.tscn" id="4_5wb77"]
+[ext_resource type="PackedScene" uid="uid://duilxkf42ilmt" path="res://gates/gate_scenes/nor_gate.tscn" id="5_8y84n"]
+[ext_resource type="PackedScene" uid="uid://dns64jmleevqq" path="res://gates/gate_scenes/xor_gate.tscn" id="6_djpvl"]
+[ext_resource type="PackedScene" uid="uid://drlawv7vh62fi" path="res://gates/gate_scenes/xnor_gate.tscn" id="7_6m4rs"]
 
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_55ls6")
+and_scene = ExtResource("2_0xdea")
+nand_scene = ExtResource("3_tb7ej")
+or_scene = ExtResource("4_5wb77")
+nor_scene = ExtResource("5_8y84n")
+xor_scene = ExtResource("6_djpvl")
+xnor_scene = ExtResource("7_6m4rs")
+not_scene = ExtResource("1_5xght")
 
-[node name="AndGate2" parent="." instance=ExtResource("2_0xdea")]
-position = Vector2(648, 107)
+[node name="MainUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 669.0
+offset_top = 602.0
+offset_right = 669.0
+offset_bottom = 602.0
+metadata/_edit_use_anchors_ = true
 
-[node name="NotGate" parent="." instance=ExtResource("1_5xght")]
-position = Vector2(504, 264)
+[node name="And" type="Button" parent="MainUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -267.0
+offset_top = -66.0
+offset_right = -228.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "And"
 
-[node name="NotGate2" parent="." instance=ExtResource("1_5xght")]
-position = Vector2(403, 446)
+[node name="Nand" type="Button" parent="MainUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -212.0
+offset_top = -65.0
+offset_right = -184.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Nand
+"
+
+[node name="Or" type="Button" parent="MainUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -165.0
+offset_top = -68.0
+offset_right = -137.0
+offset_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Or"
+
+[node name="Nor" type="Button" parent="MainUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -119.0
+offset_top = -65.0
+offset_right = -81.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Nor"
+
+[node name="Xor" type="Button" parent="MainUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -63.0
+offset_top = -74.0
+offset_right = -28.0
+offset_bottom = -43.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Xor"
+
+[node name="Xnor" type="Button" parent="MainUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -71.0
+offset_right = 47.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Xnor"
+
+[node name="Not" type="Button" parent="MainUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 72.0
+offset_top = -71.0
+offset_right = 109.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Not"
 
 [node name="AndGate" parent="." instance=ExtResource("2_0xdea")]
-position = Vector2(269, 142)
+position = Vector2(301, 207)
+
+[connection signal="pressed" from="MainUI/And" to="." method="_on_and_pressed"]
+[connection signal="pressed" from="MainUI/Nand" to="." method="_on_nand_pressed"]
+[connection signal="pressed" from="MainUI/Or" to="." method="_on_or_pressed"]
+[connection signal="pressed" from="MainUI/Nor" to="." method="_on_nor_pressed"]
+[connection signal="pressed" from="MainUI/Xor" to="." method="_on_xor_pressed"]
+[connection signal="pressed" from="MainUI/Xnor" to="." method="_on_xnor_pressed"]
+[connection signal="pressed" from="MainUI/Not" to="." method="_on_not_pressed"]

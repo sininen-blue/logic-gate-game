@@ -3,7 +3,7 @@ extends Node2D
 signal gate_hover(source)
 signal gate_unhover(source)
 
-@onready var parent : Node = get_parent()
+@onready var parent : Area2D = get_parent()
 @onready var main : Node2D = get_parent().get_parent()
 
 func _ready() -> void:
@@ -14,7 +14,9 @@ func _ready() -> void:
 	self.gate_unhover.connect(main._on_gate_unhover)
 
 func _on_mouse_entered() -> void:
+	print("test")
 	gate_hover.emit(parent)
 
 func _on_mouse_exited() -> void:
+	print("test")
 	gate_unhover.emit(parent)

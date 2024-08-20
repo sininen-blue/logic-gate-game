@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://duilxkf42ilmt"]
+
+[ext_resource type="PackedScene" uid="uid://bvh24svr303g1" path="res://gates/draggable.tscn" id="1_oo7pi"]
+[ext_resource type="Texture2D" uid="uid://bygqrri866v4p" path="res://assets/nor.png" id="2_trdnk"]
+[ext_resource type="PackedScene" uid="uid://wwlufhgwhth4" path="res://gates/input_area.tscn" id="3_m645b"]
+[ext_resource type="PackedScene" uid="uid://b10g0m66gwypw" path="res://gates/output_area.tscn" id="4_ql84x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3hss8"]
+size = Vector2(108, 82)
+
+[node name="NorGate" type="Area2D" groups=["gates"]]
+
+[node name="Draggable" parent="." instance=ExtResource("1_oo7pi")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_3hss8")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_trdnk")
+
+[node name="InputArea" parent="." instance=ExtResource("3_m645b")]
+position = Vector2(-104, 1)
+
+[node name="OutputArea" parent="." instance=ExtResource("4_ql84x")]
+position = Vector2(85, 0)

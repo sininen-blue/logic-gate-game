@@ -2,10 +2,57 @@ extends Node2D
 
 # have a list of all laready existing gates
 # add and remove gates
-var gates
+var gates : Array
 
 func _ready() -> void:
 	gates = get_tree().get_nodes_in_group("gates")
+
+
+# UI STUFF
+@export var and_scene : PackedScene
+@export var nand_scene : PackedScene
+@export var or_scene : PackedScene
+@export var nor_scene : PackedScene
+@export var xor_scene : PackedScene
+@export var xnor_scene : PackedScene
+@export var not_scene : PackedScene
+
+func _on_and_pressed() -> void:
+	var and_gate = and_scene.instantiate()
+	gates.append(and_gate)
+	add_child(and_gate)
+
+func _on_nand_pressed() -> void:
+	var nand_gate = nand_scene.instantiate()
+	gates.append(nand_gate)
+	add_child(nand_gate)
+
+func _on_or_pressed() -> void:
+	var or_gate = or_scene.instantiate()
+	gates.append(or_gate)
+	add_child(or_gate)
+
+func _on_nor_pressed() -> void:
+	var nor_gate = nor_scene.instantiate()
+	gates.append(nor_gate)
+	add_child(nor_gate)
+
+func _on_xor_pressed() -> void:
+	var xor_gate = xor_scene.instantiate()
+	gates.append(xor_gate)
+	add_child(xor_gate)
+
+func _on_xnor_pressed() -> void:
+	var xnor_gate = xnor_scene.instantiate()
+	gates.append(xnor_gate)
+	add_child(xnor_gate)
+
+func _on_not_pressed() -> void:
+	var not_gate = not_scene.instantiate()
+	gates.append(not_gate)
+	add_child(not_gate)
+
+
 
 
 # drag gates
@@ -25,6 +72,7 @@ var state = IDLE
 
 func _process(_delta: float) -> void:
 	handle_connections()
+	
 	match state:
 		IDLE:
 			if Input.is_action_just_pressed("left_click"):
@@ -94,7 +142,11 @@ func handle_connections():
 		connection[0].set_point_position(0 ,connection[1].global_position)
 		connection[0].set_point_position(1 ,connection[2].global_position)
 
-# TODO add a check to make sure inputs only go to outputs and vice versa
+# TODO figure out how you want to handle 2 input gates
+# Probably just stick to one input area and then put a +1 in it's own variable
+# I just generally don't like this entire system
+# since it gets confusing pretty quickly
+# but i'll stick to it until the end of the week
 func _on_input_hover(source : Area2D):
 	if current_connection == null:
 		var line : Line2D = Line2D.new()
