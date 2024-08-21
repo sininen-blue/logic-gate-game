@@ -27,3 +27,7 @@ position = Vector2(-104, 1)
 
 [node name="OutputArea" parent="." instance=ExtResource("4_8uoy4")]
 position = Vector2(85, 0)
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0

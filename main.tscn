@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ho70ru5nue5a"]
+[gd_scene load_steps=10 format=3 uid="uid://ho70ru5nue5a"]
 
 [ext_resource type="PackedScene" uid="uid://bqfvhr5nlejr2" path="res://gates/gate_scenes/not_gate.tscn" id="1_5xght"]
 [ext_resource type="Script" path="res://globals/grab_variables.gd" id="1_55ls6"]
@@ -8,6 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://duilxkf42ilmt" path="res://gates/gate_scenes/nor_gate.tscn" id="5_8y84n"]
 [ext_resource type="PackedScene" uid="uid://dns64jmleevqq" path="res://gates/gate_scenes/xor_gate.tscn" id="6_djpvl"]
 [ext_resource type="PackedScene" uid="uid://drlawv7vh62fi" path="res://gates/gate_scenes/xnor_gate.tscn" id="7_6m4rs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cg4y1"]
+radius = 4.47214
 
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
@@ -135,8 +138,13 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Not"
 
-[node name="AndGate" parent="." instance=ExtResource("2_0xdea")]
-position = Vector2(301, 207)
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 0)
+
+[node name="MouseArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MouseArea"]
+shape = SubResource("CircleShape2D_cg4y1")
 
 [connection signal="pressed" from="MainUI/And" to="." method="_on_and_pressed"]
 [connection signal="pressed" from="MainUI/Nand" to="." method="_on_nand_pressed"]
