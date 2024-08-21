@@ -123,6 +123,17 @@ func _on_gate_unhover(source : Area2D):
 	if current_gate != null and state != MOVING_GATE:
 		current_gate = null
 
+func _on_gate_kill(source: Area2D):
+	# TODO: check if that child has any active connections
+	
+	# for connections
+	# if connection.start or end == source
+	# remove connection
+	# remove child
+	
+	remove_child(source)
+
+# connections
 
 
 var connections : Array
@@ -172,7 +183,8 @@ func _on_output_hover(source : Area2D):
 			if con_type == Con_Type.INPUT:
 				potential_close = source
 
-
+# TODO BUG: issue where if you hover over a connection point, it doesn't get nulled 
+# so 
 func _on_input_unhover(source : Area2D):
 	if current_connection != null and state != CREATING_CONNECTION:
 		current_connection = null

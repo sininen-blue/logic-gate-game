@@ -23,10 +23,10 @@ not_scene = ExtResource("1_5xght")
 [node name="MainUI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 669.0
-offset_top = 602.0
-offset_right = 669.0
-offset_bottom = 602.0
+offset_left = 653.0
+offset_top = 659.0
+offset_right = 653.0
+offset_bottom = 659.0
 metadata/_edit_use_anchors_ = true
 
 [node name="And" type="Button" parent="MainUI"]

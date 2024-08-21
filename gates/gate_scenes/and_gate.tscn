@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c5qlhvya4xd5v"]
+[gd_scene load_steps=7 format=3 uid="uid://c5qlhvya4xd5v"]
 
 [ext_resource type="PackedScene" uid="uid://bvh24svr303g1" path="res://gates/draggable.tscn" id="1_syx0w"]
 [ext_resource type="Texture2D" uid="uid://dos22tbxndw5a" path="res://assets/and.png" id="2_hdlb4"]
+[ext_resource type="PackedScene" uid="uid://br4426jago14n" path="res://gates/deletable.tscn" id="2_ub82l"]
 [ext_resource type="PackedScene" uid="uid://wwlufhgwhth4" path="res://gates/input_area.tscn" id="3_jwepu"]
 [ext_resource type="PackedScene" uid="uid://b10g0m66gwypw" path="res://gates/output_area.tscn" id="4_8uoy4"]
 
@@ -11,6 +12,8 @@ size = Vector2(108, 82)
 [node name="AndGate" type="Area2D" groups=["gates"]]
 
 [node name="Draggable" parent="." instance=ExtResource("1_syx0w")]
+
+[node name="Deletable" parent="." instance=ExtResource("2_ub82l")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
