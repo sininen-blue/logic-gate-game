@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dns64jmleevqq"]
+[gd_scene load_steps=8 format=3 uid="uid://dns64jmleevqq"]
 
 [ext_resource type="Script" path="res://gates/gate_scenes/gate_variables.gd" id="1_3kpf4"]
 [ext_resource type="PackedScene" uid="uid://bvh24svr303g1" path="res://gates/draggable.tscn" id="1_iiovn"]
 [ext_resource type="Texture2D" uid="uid://d4dlbefajnb4t" path="res://assets/xor.png" id="2_fowqt"]
 [ext_resource type="PackedScene" uid="uid://wwlufhgwhth4" path="res://gates/input_area.tscn" id="3_1gjs6"]
+[ext_resource type="PackedScene" uid="uid://br4426jago14n" path="res://gates/deletable.tscn" id="3_eiif7"]
 [ext_resource type="PackedScene" uid="uid://b10g0m66gwypw" path="res://gates/output_area.tscn" id="4_u1vh1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3hss8"]
@@ -13,6 +14,8 @@ size = Vector2(108, 82)
 script = ExtResource("1_3kpf4")
 
 [node name="Draggable" parent="." instance=ExtResource("1_iiovn")]
+
+[node name="Deletable" parent="." instance=ExtResource("3_eiif7")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)

@@ -12,6 +12,7 @@ class Connection:
 	var end : Gate
 	var value : bool
 
+@export var connection_line : PackedScene
 @export var and_scene : PackedScene
 @export var nand_scene : PackedScene
 @export var or_scene : PackedScene
@@ -22,6 +23,7 @@ class Connection:
 
 @onready var mouse_area: Area2D = $MouseArea
 
+## TODO: connection deletion by themselves
 
 
 func create_gate(gate_node: Area2D) -> Gate:
@@ -80,6 +82,25 @@ func _on_gate_dragging_start(_source : Area2D):
 func _on_gate_dragging_stop(_source : Area2D):
 	state = IDLE
 
+
+func _on_gate_kill(source: Area2D):
+	var gate_item : Gate
+	for gate in gates:
+		if gate.node == source:
+			gate_item = gate
+	
+	var connection_items : Array[Connection]
+	for connection in connections:
+		if connection.start == gate_item or connection.end == gate_item:
+			connection_items.append(connection)
+	
+	remove_child(gate_item.node)
+	gates.erase(gate_item)
+	
+	for to_delete in connection_items:
+		remove_child(to_delete.line)
+		connections.erase(to_delete)
+
 var new_connection : Connection
 func _on_connection_start(source : Area2D, type : String):
 	state = CREATING_CONNECTION
@@ -105,7 +126,6 @@ func _on_connection_stop(source : Area2D):
 	# check if the area under the mouse position is an input
 	var areas = mouse_area.get_overlapping_areas()
 	for area in areas:
-		
 		# if connection started with an output
 		if new_connection.end == null:
 			if area.is_in_group("inputs") and area.parent != source:
@@ -113,7 +133,7 @@ func _on_connection_stop(source : Area2D):
 					if gate.node == area.parent:
 						new_connection.end = gate
 				
-				new_connection.line = Line2D.new()
+				new_connection.line = ConnectionLine.new()
 				new_connection.line.add_point(Vector2.ZERO)
 				new_connection.line.add_point(Vector2.ZERO)
 				add_child(new_connection.line)
@@ -130,7 +150,7 @@ func _on_connection_stop(source : Area2D):
 						new_connection.start = gate
 				
 				# probably change this line2d at some point
-				new_connection.line = Line2D.new()
+				new_connection.line = ConnectionLine.new()
 				new_connection.line.add_point(Vector2.ZERO)
 				new_connection.line.add_point(Vector2.ZERO)
 				add_child(new_connection.line)
@@ -143,11 +163,12 @@ func _on_connection_stop(source : Area2D):
 func _process(_delta: float) -> void:
 	mouse_area.global_position = get_global_mouse_position()
 	
-	
 	if connections.is_empty() == false:
 		for connection in connections:
+			var last_point_index : int = connection.line.get_point_count() -1
+			connection.line.fill()
 			connection.line.set_point_position(0, connection.start.node.output_area.global_position)
-			connection.line.set_point_position(1, connection.end.node.input_area.global_position)
+			connection.line.set_point_position(last_point_index, connection.end.node.input_area.global_position)
 	
 	match state:
 		IDLE:
@@ -156,53 +177,3 @@ func _process(_delta: float) -> void:
 			pass
 		CREATING_CONNECTION:
 			pass
-
-
-#var connections : Array
-#enum Con_Type {NONE, INPUT, OUTPUT}
-#var con_type = Con_Type.NONE
-#var start_gate : Area2D
-#var end_gate : Area2D
-#var current_connection : Line2D
-#
-#var potential_close : Area2D
-#
-#func handle_connections():
-	#if connections == null:
-		#return
-	#
-	#for connection in connections:
-		#connection[0].set_point_position(0 ,connection[1].global_position)
-		#connection[0].set_point_position(1 ,connection[2].global_position)
-
-#func _on_input_hover(source : Area2D):
-	#if current_connection == null:
-		#var line : Line2D = Line2D.new()
-		#line.add_point(source.global_position)
-		#
-		#start_gate = source
-		#current_connection = line
-		#con_type = Con_Type.INPUT
-	#else:
-		#if current_connection.get_point_position(0) != source.global_position:
-			#if con_type == Con_Type.OUTPUT:
-				#potential_close = source
-#
-#func _on_output_hover(source : Area2D):
-	#if current_connection == null:
-		#var line : Line2D = Line2D.new()
-		#start_gate = source
-		#line.add_point(start_gate.global_position)
-		#current_connection = line
-		#con_type = Con_Type.OUTPUT
-	#else:
-		#if current_connection.get_point_position(0) != source.global_position:
-			#if con_type == Con_Type.INPUT:
-				#potential_close = source
-#func _on_input_unhover(source : Area2D):
-	#if current_connection != null and state != CREATING_CONNECTION:
-		#current_connection = null
-#
-#func _on_output_unhover(source : Area2D):
-	#if current_connection != null and state != CREATING_CONNECTION:
-		#current_connection = null

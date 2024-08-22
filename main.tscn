@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://ho70ru5nue5a"]
+[gd_scene load_steps=11 format=3 uid="uid://ho70ru5nue5a"]
 
 [ext_resource type="PackedScene" uid="uid://bqfvhr5nlejr2" path="res://gates/gate_scenes/not_gate.tscn" id="1_5xght"]
 [ext_resource type="Script" path="res://globals/grab_variables.gd" id="1_55ls6"]
 [ext_resource type="PackedScene" uid="uid://c5qlhvya4xd5v" path="res://gates/gate_scenes/and_gate.tscn" id="2_0xdea"]
+[ext_resource type="PackedScene" uid="uid://djqrn33r3hyvu" path="res://connections/connection_line.tscn" id="2_gmqr7"]
 [ext_resource type="PackedScene" uid="uid://drvv5hmhf18c4" path="res://gates/gate_scenes/nand_gate.tscn" id="3_tb7ej"]
 [ext_resource type="PackedScene" uid="uid://trfyab33tjl1" path="res://gates/gate_scenes/or_gate.tscn" id="4_5wb77"]
 [ext_resource type="PackedScene" uid="uid://duilxkf42ilmt" path="res://gates/gate_scenes/nor_gate.tscn" id="5_8y84n"]
@@ -15,6 +16,7 @@ radius = 4.47214
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_55ls6")
+connection_line = ExtResource("2_gmqr7")
 and_scene = ExtResource("2_0xdea")
 nand_scene = ExtResource("3_tb7ej")
 or_scene = ExtResource("4_5wb77")
