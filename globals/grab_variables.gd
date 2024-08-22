@@ -7,6 +7,7 @@ class Gate:
 
 var connections : Array[Connection]
 class Connection:
+	var line : Line2D
 	var start : Gate
 	var end : Gate
 	var value : bool
@@ -80,45 +81,73 @@ func _on_gate_dragging_stop(_source : Area2D):
 	state = IDLE
 
 var new_connection : Connection
-func _on_connection_start(source : Area2D):
+func _on_connection_start(source : Area2D, type : String):
 	state = CREATING_CONNECTION
 	
 	new_connection = Connection.new()
+	var source_gate : Gate
 	for gate in gates:
 		if gate.node == source:
-			new_connection.start = gate
+			source_gate = gate
+	
+	if type == "output":
+		new_connection.start = source_gate
+	if type == "input":
+		new_connection.end = source_gate
+
 
 func _on_connection_stop(source : Area2D):
 	state = IDLE
 	
 	if mouse_area.has_overlapping_areas() == false:
 		new_connection = null
-		
+	
 	# check if the area under the mouse position is an input
 	var areas = mouse_area.get_overlapping_areas()
 	for area in areas:
-		# check if start is an input or not
-		# since the start will always be an input
-		# I can just check if it's an input or now once
-		# I do the output area programming
-		# that or just throw another variable to null
-		# will havea weird issue with simulation though
-		if area.is_in_group("inputs") and area.parent != source:
-			for gate in gates:
-				if gate.node == area.parent:
-					new_connection.end = gate
+		
+		# if connection started with an output
+		if new_connection.end == null:
+			if area.is_in_group("inputs") and area.parent != source:
+				for gate in gates:
+					if gate.node == area.parent:
+						new_connection.end = gate
+				
+				new_connection.line = Line2D.new()
+				new_connection.line.add_point(Vector2.ZERO)
+				new_connection.line.add_point(Vector2.ZERO)
+				add_child(new_connection.line)
+				
+				connections.append(new_connection)
+				new_connection = null
+				break
 			
-			connections.append(new_connection)
-			new_connection = null
+		# if connection started with an input
+		if new_connection.start == null:
+			if area.is_in_group("outputs") and area.parent != source:
+				for gate in gates:
+					if gate.node == area.parent:
+						new_connection.start = gate
+				
+				# probably change this line2d at some point
+				new_connection.line = Line2D.new()
+				new_connection.line.add_point(Vector2.ZERO)
+				new_connection.line.add_point(Vector2.ZERO)
+				add_child(new_connection.line)
+				
+				connections.append(new_connection)
+				new_connection = null
+				break
 
 
 func _process(_delta: float) -> void:
 	mouse_area.global_position = get_global_mouse_position()
 	
-	# debug line
+	
 	if connections.is_empty() == false:
-		$Line2D.set_point_position(0, connections[0].start.node.global_position)
-		$Line2D.set_point_position(1, connections[0].end.node.global_position)
+		for connection in connections:
+			connection.line.set_point_position(0, connection.start.node.output_area.global_position)
+			connection.line.set_point_position(1, connection.end.node.input_area.global_position)
 	
 	match state:
 		IDLE:

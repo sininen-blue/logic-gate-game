@@ -15,7 +15,7 @@ extends Area2D
 # if not released over an output
 # stop creating a connection
 
-signal connection_start(source)
+signal connection_start(source, type)
 signal connection_stop(source)
 
 var hovering : bool = false
@@ -34,11 +34,9 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	$"../Label".text = str(hovering, connecting, main.state)
-	
 	if hovering:
 		if Input.is_action_just_pressed("left_click") and main.state == 0:
-			connection_start.emit(parent)
+			connection_start.emit(parent, "input")
 			connecting = true
 	
 	if connecting:

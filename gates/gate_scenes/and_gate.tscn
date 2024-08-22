@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://c5qlhvya4xd5v"]
+[gd_scene load_steps=8 format=3 uid="uid://c5qlhvya4xd5v"]
 
+[ext_resource type="Script" path="res://gates/gate_scenes/gate_variables.gd" id="1_4kq5i"]
 [ext_resource type="PackedScene" uid="uid://bvh24svr303g1" path="res://gates/draggable.tscn" id="1_syx0w"]
 [ext_resource type="Texture2D" uid="uid://dos22tbxndw5a" path="res://assets/and.png" id="2_hdlb4"]
 [ext_resource type="PackedScene" uid="uid://br4426jago14n" path="res://gates/deletable.tscn" id="2_ub82l"]
@@ -10,6 +11,7 @@
 size = Vector2(108, 82)
 
 [node name="AndGate" type="Area2D" groups=["gates"]]
+script = ExtResource("1_4kq5i")
 
 [node name="Draggable" parent="." instance=ExtResource("1_syx0w")]
 
@@ -27,7 +29,3 @@ position = Vector2(-104, 1)
 
 [node name="OutputArea" parent="." instance=ExtResource("4_8uoy4")]
 position = Vector2(85, 0)
-
-[node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
