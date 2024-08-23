@@ -17,27 +17,41 @@ var end_point : Vector2
 var distance : float = 30
 var index : int = 0
 
-func _ready() -> void:
-	fill()
+var area_pool : Array[Area2D]
 
-func fill():
-	var distance_to_prev_point : float = 0.0
-	var last_point : Vector2 = points[-1]
+func _process(delta: float) -> void:
+	start_point = self.points[0]
+	end_point = self.points[-1]
 	
-	while points[index].distance_to(last_point) > distance:
-		create_area(points[index])
-		var current_point : Vector2 = points[index]
-		var next_point : Vector2 = current_point + (current_point.direction_to(last_point) * 5)
-		self.add_point(points[index] + points[index].direction_to(last_point) * distance, index + 1)
-		
-		index += 1
+	distribute_points()
+	
+	if len(area_pool) < self.get_point_count():
+		var area : Area2D = create_area(Vector2(200,200))
+		area_pool.append(area)
+		self.add_child(area)
+	if len(area_pool) > self.get_point_count():
+		var area : Area2D = area_pool.pop_back()
+		self.remove_child(area)
+	
+func distribute_areas():
+	for j in range(len(area_pool)):
+		area_pool[j].global_position = points[j]
 
-#func _input(event: InputEvent) -> void:
-	#if event.is_action_pressed("left_click"):
-		#self.set_point_position(self.get_point_count()-1, get_global_mouse_position())
-		#fill()
+func distribute_points():
+	var unit_vec : Vector2 = start_point.direction_to(end_point)
+	var pointer : Vector2 = start_point
+	var vectors : PackedVector2Array
+	
+	while pointer.distance_to(end_point) > distance:
+		pointer = pointer + (unit_vec * distance)
+		vectors.append(pointer)
+	
+	vectors.insert(0, start_point)
+	vectors.append(end_point)
+	
+	points = vectors
 
-func create_area(target : Vector2):
+func create_area(target : Vector2) -> Area2D:
 	var area : Area2D = Area2D.new()
 	area.global_position = target
 	
@@ -46,5 +60,6 @@ func create_area(target : Vector2):
 	shape.radius = 20
 	
 	collision.shape = shape
-	self.add_child(area)
 	area.add_child(collision)
+	
+	return area

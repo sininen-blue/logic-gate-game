@@ -23,9 +23,6 @@ class Connection:
 
 @onready var mouse_area: Area2D = $MouseArea
 
-## TODO: connection deletion by themselves
-
-
 func create_gate(gate_node: Area2D) -> Gate:
 	var new_gate : Gate = Gate.new()
 	new_gate.node = gate_node
@@ -101,6 +98,9 @@ func _on_gate_kill(source: Area2D):
 		remove_child(to_delete.line)
 		connections.erase(to_delete)
 
+func _on_connection_kill(source : Line2D):
+	print("??")
+
 var new_connection : Connection
 func _on_connection_start(source : Area2D, type : String):
 	state = CREATING_CONNECTION
@@ -166,13 +166,14 @@ func _process(_delta: float) -> void:
 	if connections.is_empty() == false:
 		for connection in connections:
 			var last_point_index : int = connection.line.get_point_count() -1
-			connection.line.fill()
 			connection.line.set_point_position(0, connection.start.node.output_area.global_position)
 			connection.line.set_point_position(last_point_index, connection.end.node.input_area.global_position)
 	
 	match state:
 		IDLE:
-			pass
+			## TODO: put this in a state transition instead to save compute time
+			for connection in connections:
+				connection.line.distribute_areas()
 		MOVING_GATE:
 			pass
 		CREATING_CONNECTION:

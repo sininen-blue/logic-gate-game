@@ -1,7 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://djqrn33r3hyvu"]
+[gd_scene load_steps=4 format=3 uid="uid://djqrn33r3hyvu"]
 
 [ext_resource type="Script" path="res://connections/connection_line.gd" id="1_dacbg"]
+[ext_resource type="PackedScene" uid="uid://br4426jago14n" path="res://gates/deletable.tscn" id="2_2mi6o"]
+[ext_resource type="Script" path="res://gates/deletable-connection.gd" id="3_0r0qc"]
 
 [node name="ConnectionLine" type="Line2D"]
-points = PackedVector2Array(756, 189, 181, 383)
 script = ExtResource("1_dacbg")
+
+[node name="Deletable" parent="." instance=ExtResource("2_2mi6o")]
+script = ExtResource("3_0r0qc")
