@@ -80,7 +80,22 @@ func _on_gate_dragging_stop(_source : Area2D):
 	state = IDLE
 
 
-func _on_gate_kill(source: Area2D):
+#func _on_gate_kill(source: Area2D):
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("right_click"):
+		remove_item()
+	
+func remove_item():
+	var areas = mouse_area.get_overlapping_areas()
+	for area in areas:
+		if in_connections(area):
+			remove_connection(area)
+			return
+		if in_gates(area):
+			remove_gate(area)
+			return
+
+func remove_gate(source : Area2D):
 	var gate_item : Gate
 	for gate in gates:
 		if gate.node == source:
@@ -98,8 +113,23 @@ func _on_gate_kill(source: Area2D):
 		remove_child(to_delete.line)
 		connections.erase(to_delete)
 
-func _on_connection_kill(source : Line2D):
-	print("??")
+func remove_connection(target : Area2D):
+	for connection in connections:
+		if connection.line == target.get_parent():
+			remove_child(connection.line)
+			connections.erase(connection)
+
+func in_gates(node : Area2D) -> bool:
+	for gate in gates:
+		if gate.node == node:
+			return true
+	return false
+
+func in_connections(line : Area2D) -> bool:
+	for connection in connections:
+		if connection.line == line.get_parent():
+			return true
+	return false
 
 var new_connection : Connection
 func _on_connection_start(source : Area2D, type : String):
